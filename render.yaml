@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: jobyaari-blog
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: JobYaari
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        fromService:
+          type: web
+          name: jobyaari-blog
+          property: host
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: jobyaari-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: jobyaari-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: jobyaari-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: jobyaari-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: jobyaari-db
+          property: password
+      - key: SESSION_DRIVER
+        value: file
+      - key: CACHE_STORE
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: local
+
+databases:
+  - name: jobyaari-db
+    databaseName: jobyaari_blog
+    user: jobyaari_user
