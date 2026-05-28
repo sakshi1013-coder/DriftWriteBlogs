@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login – JobYaari</title>
+    <title>Admin Login – DriftWrite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -18,7 +18,7 @@
                     <rect width="36" height="36" rx="8" fill="#1a56db"/>
                     <path d="M10 12h16M10 18h10M10 24h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
-                Job<span>Yaari</span>
+                Drift<span>Write</span>
             </div>
             <h1 class="login-title">Welcome Back</h1>
             <p class="login-subtitle">Sign in to manage your blog posts</p>
@@ -86,7 +86,7 @@
         </form>
 
         <div class="login-hint">
-            Default credentials: <code>admin@jobyaari.com</code> / <code>Admin@123</code>
+            Default credentials: <code>admin@jobyaari.com</code> / <code>admin@1013</code>
         </div>
         <div class="login-back">
             <a href="{{ route('blogs.index') }}">&larr; Back to Website</a>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'JobYaari – Latest Government Job Updates & Exam News')
+@section('title', 'DriftWrite Blogs – Premium Publishing Platform')
 
 @section('content')
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
