@@ -57,51 +57,7 @@ A premium, high-performance, full-stack **Blog Management System** designed for 
 
 ---
 
-## 📦 Local Development Setup
 
-### Prerequisites
-- **PHP** 8.2 or higher
-- **Composer** (Dependency manager)
-- **MySQL** 8.x or higher
-- **Git**
-
-### Installation
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/sakshi1013-coder/DriftWriteBlogs.git
-cd DriftWriteBlogs
-
-# 2. Install backend dependencies
-composer install
-
-# 3. Create env file
-cp .env.example .env
-
-# 4. Configure database settings inside .env
-# DB_DATABASE=jobyaari_blog
-# DB_USERNAME=root
-# DB_PASSWORD=your_password
-
-# 5. Generate secure key
-php artisan key:generate
-
-# 6. Create database in MySQL (locally)
-mysql -u root -p -e "CREATE DATABASE jobyaari_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# 7. Run Migrations and Seed static category/admin records
-php artisan migrate:fresh --seed
-
-# 8. Link storage folder
-php artisan storage:link
-
-# 9. Launch development server
-php artisan serve
-```
-
-🌐 Open [http://localhost:8000](http://localhost:8000)
-
----
 
 ## 🌐 How to Deploy This Project
 
