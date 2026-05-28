@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $blog->title . ' – JobYaari')
+@section('title', $blog->title . ' – DriftWrite')
 
 @section('content')
 <div class="blog-detail-wrap">
@@ -23,7 +23,7 @@
         <div class="detail-layout">
 
             <!-- ── Article ─────────────────────────────────────────────── -->
-            <article class="blog-article">
+            <article class="blog-article" data-slug="{{ $blog->slug }}">
                 <!-- Hero Image -->
                 <div class="article-image-wrap">
                     <img src="{{ $blog->image_url }}"
@@ -35,10 +35,19 @@
 
                 <!-- Header -->
                 <div class="article-header">
-                    <div class="article-tags">
-                        <span class="article-cat-badge" style="background: {{ $blog->category->color }}22; color: {{ $blog->category->color }}; border-color: {{ $blog->category->color }}44">
-                            {{ $blog->category->name }}
-                        </span>
+                    <div class="article-header-wrap">
+                        <div class="article-tags">
+                            <span class="article-cat-badge" style="background: {{ $blog->category->color }}22; color: {{ $blog->category->color }}; border-color: {{ $blog->category->color }}44">
+                                {{ $blog->category->name }}
+                            </span>
+                        </div>
+                        {{-- Bookmark button --}}
+                        <button class="btn-detail-bookmark" data-slug="{{ $blog->slug }}" aria-label="Bookmark this post">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            <span class="bookmark-text">Bookmark</span>
+                        </button>
                     </div>
 
                     <h1 class="article-title">{{ $blog->title }}</h1>
@@ -94,7 +103,12 @@
                 <!-- Related Posts -->
                 @if($related->count())
                 <div class="sidebar-card">
-                    <h3 class="sidebar-title">📌 Related Posts</h3>
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        Related Posts
+                    </h3>
                     <div class="related-posts">
                         @foreach($related as $rel)
                         <a href="{{ route('blogs.show', $rel->slug) }}" class="related-post-item">
@@ -114,7 +128,12 @@
 
                 <!-- Category Filter Quick Links -->
                 <div class="sidebar-card">
-                    <h3 class="sidebar-title">🗂️ Browse Categories</h3>
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Browse Categories
+                    </h3>
                     <div class="cat-quick-links">
                         @foreach(\App\Models\Category::withCount(['blogs' => fn($q) => $q->where('is_published', true)])->get() as $cat)
                         <a href="{{ route('blogs.index', ['category' => $cat->slug]) }}" class="cat-link"

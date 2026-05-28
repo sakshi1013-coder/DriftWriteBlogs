@@ -74,12 +74,17 @@ $(function () {
 
   // ── Submit button loading state ────────────────────────────────────────────
   $('#blog-form').on('submit', function () {
-    $('#submit-btn').prop('disabled', true).html(`
+    const $btn = $('#submit-btn');
+    $btn.html(`
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" class="spin-icon">
         <path d="M21 12a9 9 0 11-6.219-8.56"/>
       </svg>
       Saving...
     `);
+    // Delay disabling to allow the browser to register the submit event
+    setTimeout(() => {
+      $btn.prop('disabled', true);
+    }, 0);
   });
 
 });

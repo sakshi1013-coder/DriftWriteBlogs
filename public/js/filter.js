@@ -25,7 +25,88 @@ $(function () {
   const $pagination = $('#pagination-wrap');
   const $heroSearch = $('#hero-search');
 
+  // ── Bookmarks Engine ───────────────────────────────────────────────────────
+  const STORAGE_KEY = 'driftwrite_bookmarks';
+
+  function getBookmarks() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function setBookmarks(bookmarks) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookmarks));
+    updateBookmarkPills();
+  }
+
+  function toggleBookmark(slug) {
+    let bookmarks = getBookmarks();
+    const idx = bookmarks.indexOf(slug);
+    if (idx === -1) {
+      bookmarks.push(slug);
+    } else {
+      bookmarks.splice(idx, 1);
+    }
+    setBookmarks(bookmarks);
+    return idx === -1; // returns true if added, false if removed
+  }
+
+  function updateBookmarkPills() {
+    const count = getBookmarks().length;
+    $('#bookmark-pill-count').text(count);
+    
+    // Highlight existing cards on page
+    const bookmarks = getBookmarks();
+    $('.btn-bookmark, .btn-detail-bookmark').each(function() {
+      const slug = $(this).data('slug');
+      if (bookmarks.includes(slug)) {
+        $(this).addClass('bookmarked');
+        $(this).find('.bookmark-text').text('Bookmarked');
+      } else {
+        $(this).removeClass('bookmarked');
+        $(this).find('.bookmark-text').text('Bookmark');
+      }
+    });
+  }
+
+  // Initialize Bookmarks state
+  updateBookmarkPills();
+
+  // Handle bookmark click dynamically
+  $(document).on('click', '.btn-bookmark, .btn-detail-bookmark', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const slug = $(this).data('slug');
+    const isAdded = toggleBookmark(slug);
+    
+    // Toggle class and state
+    updateBookmarkPills();
+
+    // If currently viewing bookmarks category, reload to filter out removed item
+    if (state.category === 'bookmarks' && !isAdded) {
+      fetchBlogs(false);
+    }
+  });
+
   // ── Core Fetch ─────────────────────────────────────────────────────────────
+  const $progressBar = $('#top-loading-bar');
+
+  function startProgressBar() {
+    $progressBar.addClass('active').css('width', '0%');
+    setTimeout(() => $progressBar.css('width', '35%'), 50);
+    setTimeout(() => $progressBar.css('width', '75%'), 300);
+  }
+
+  function completeProgressBar() {
+    $progressBar.css('width', '100%');
+    setTimeout(() => {
+      $progressBar.removeClass('active').css({ opacity: 0 });
+      setTimeout(() => $progressBar.css({ width: '0%', opacity: '' }), 400);
+    }, 200);
+  }
+
   function fetchBlogs(resetPage) {
     if (state.loading) return;
 
@@ -34,12 +115,14 @@ $(function () {
 
     $loading.addClass('active');
     $grid.css('opacity', '0.4');
+    startProgressBar();
 
     $.ajax({
       url: '/ajax/filter',
       method: 'GET',
       data: {
-        category: state.category !== 'all' ? state.category : '',
+        category: state.category,
+        slugs:    JSON.stringify(getBookmarks()),
         date:     state.date,
         search:   state.search,
         page:     state.page,
@@ -64,6 +147,9 @@ $(function () {
         // Update pagination
         renderPagination(res.currentPage, res.lastPage);
 
+        // Update bookmarks visual state on loaded cards
+        updateBookmarkPills();
+
         // Animate in
         $grid.css('opacity', '1');
         $grid.find('.blog-card').each(function (i) {
@@ -87,6 +173,7 @@ $(function () {
         $loading.removeClass('active');
         $grid.css('opacity', '1');
         state.loading = false;
+        completeProgressBar();
       }
     });
   }

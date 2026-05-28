@@ -12,10 +12,16 @@ class BlogController extends Controller
     {
         $categories = Category::withCount(['blogs' => fn($q) => $q->where('is_published', true)])->get();
 
-        $blogs = Blog::with('category')
-            ->published()
-            ->byCategory($request->category)
-            ->byDate($request->date)
+        $query = Blog::with('category')->published();
+
+        if ($request->category === 'bookmarks') {
+            $slugs = is_array($request->slugs) ? $request->slugs : json_decode($request->slugs ?? '[]', true);
+            $query->whereIn('slug', $slugs);
+        } else {
+            $query->byCategory($request->category);
+        }
+
+        $blogs = $query->byDate($request->date)
             ->search($request->search)
             ->orderBy('published_at', 'desc')
             ->paginate(9);
@@ -42,10 +48,16 @@ class BlogController extends Controller
 
     public function filter(Request $request)
     {
-        $blogs = Blog::with('category')
-            ->published()
-            ->byCategory($request->category)
-            ->byDate($request->date)
+        $query = Blog::with('category')->published();
+
+        if ($request->category === 'bookmarks') {
+            $slugs = is_array($request->slugs) ? $request->slugs : json_decode($request->slugs ?? '[]', true);
+            $query->whereIn('slug', $slugs);
+        } else {
+            $query->byCategory($request->category);
+        }
+
+        $blogs = $query->byDate($request->date)
             ->search($request->search)
             ->orderBy('published_at', 'desc')
             ->paginate(9);

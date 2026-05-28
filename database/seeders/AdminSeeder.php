@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'JobYaari Admin',
                 'email' => 'admin@jobyaari.com',
-                'password' => Hash::make('Admin@123'),
+                'password' => Hash::make('admin@1013'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
