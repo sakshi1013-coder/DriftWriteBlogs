@@ -10,7 +10,7 @@
     <div class="card-header">
         <h2 class="card-title">Edit Blog Post</h2>
         <div class="header-actions">
-            <a href="{{ route('blogs.show', $blog->slug) }}" target="_blank" class="btn-secondary-sm">View Live</a>
+            <a href="{{ route('blogs.show', $blog->slug) }}" target="driftwrite_live" class="btn-secondary-sm">View Live</a>
             <a href="{{ route('admin.blogs.index') }}" class="btn-secondary-sm">&larr; Back</a>
         </div>
     </div>

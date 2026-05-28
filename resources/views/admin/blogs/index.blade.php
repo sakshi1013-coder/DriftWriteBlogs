@@ -43,7 +43,7 @@
                     <td class="table-date">{{ $blog->published_at->format('d M Y') }}</td>
                     <td>
                         <div class="table-actions">
-                            <a href="{{ route('blogs.show', $blog->slug) }}" target="_blank" class="action-btn action-view" title="View Live">
+                            <a href="{{ route('blogs.show', $blog->slug) }}" target="driftwrite_live" class="action-btn action-view" title="View Live">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                     <circle cx="12" cy="12" r="3"/>

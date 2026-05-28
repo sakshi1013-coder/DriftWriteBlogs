@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin – JobYaari</title>
+    <title>Admin – DriftWrite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -20,7 +20,7 @@
                     <rect width="36" height="36" rx="8" fill="#1a56db"/>
                     <path d="M10 12h16M10 18h10M10 24h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
                 </svg>
-                Job<span>Yaari</span>
+                Drift<span>Write</span>
             </a>
             <button class="sidebar-close" id="sidebar-close" aria-label="Close">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
@@ -55,7 +55,7 @@
                 </svg>
                 Blog Posts
             </a>
-            <a href="{{ route('blogs.index') }}" target="_blank" class="nav-item">
+            <a href="{{ route('blogs.index') }}" target="driftwrite_live" class="nav-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                     <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
